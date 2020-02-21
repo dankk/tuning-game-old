@@ -1,7 +1,4 @@
 const tones_list = [
-  "A",
-  "A#",
-  "B",
   "C",
   "C#",
   "D",
@@ -10,7 +7,10 @@ const tones_list = [
   "F",
   "F#",
   "G",
-  "G#"
+  "G#",
+  "A",
+  "A#",
+  "B"
 ];
 
 const octs_list = [1, 2, 3, 4];

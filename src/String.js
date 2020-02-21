@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import UIfx from "uifx";
 import { notes_list } from "./Notes";
 
+console.log(notes_list);
 const reducer = (state, action) => {
   console.log(state);
   let soundFileName;
@@ -57,9 +58,9 @@ const String = ({ initNoteIdx }) => {
     dispatch({ type: shift });
   };
 
-  useEffect(() => {
-    currentNote.sound.play();
-  }, [currentNote]);
+  // useEffect(() => {
+  //   currentNote.sound.play();
+  // }, [currentNote]);
 
   return (
     <Grid container direction="row" className={classes.stringRow}>
@@ -84,12 +85,12 @@ const String = ({ initNoteIdx }) => {
 export const StringGroup = () => {
   return (
     <Container>
-      <String initNoteIdx={43} />
+      <String initNoteIdx={40} />
+      <String initNoteIdx={35} />
+      <String initNoteIdx={31} />
       <String initNoteIdx={26} />
-      <String initNoteIdx={34} />
-      <String initNoteIdx={29} />
-      <String initNoteIdx={12} />
-      <String initNoteIdx={19} />
+      <String initNoteIdx={21} />
+      <String initNoteIdx={16} />
     </Container>
   );
 };
