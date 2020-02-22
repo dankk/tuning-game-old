@@ -1,3 +1,8 @@
+export const tunings = {
+  //string 1 - 6
+  standard: [40, 35, 31, 26, 21, 16]
+};
+
 const tones_list = [
   "C",
   "C#",
@@ -19,3 +24,10 @@ export const notes_list = octs_list.reduce((notes, oct) => {
   const oct_notes = tones_list.map(n => `${n}${oct}`);
   return [...notes, ...oct_notes];
 }, []);
+
+export const indexToNoteFile = idx => {
+  const soundFileName = notes_list[idx].replace("#", "s");
+  return `/sound-files/${soundFileName}.mp3`;
+};
+
+//get random notes

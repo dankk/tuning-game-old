@@ -3,31 +3,28 @@ import React, { useState, useReducer, useEffect, useCallback } from "react";
 import { Paper, Grid, Button, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { notes_list } from "./Notes";
+import { indexToNoteFile, tunings, notes_list } from "./utils/noteManager";
 
 const pitchShiftReducer = (state, action) => {
   //console.log(state);
-  let soundFileName;
   switch (action.type) {
     case "flat":
       if (state.noteIdx <= 0) {
         return state;
       }
-      soundFileName = notes_list[state.noteIdx - 1].replace("#", "s");
       return {
         noteIdx: state.noteIdx - 1,
         text: notes_list[state.noteIdx - 1],
-        sound: new Audio(`/sound-files/${soundFileName}.mp3`)
+        sound: new Audio(indexToNoteFile(state.noteIdx - 1))
       };
     case "sharp":
       if (state.noteIdx >= notes_list.length - 1) {
         return state;
       }
-      soundFileName = notes_list[state.noteIdx + 1].replace("#", "s");
       return {
         noteIdx: state.noteIdx + 1,
         text: notes_list[state.noteIdx + 1],
-        sound: new Audio(`/sound-files/${soundFileName}.mp3`)
+        sound: new Audio(indexToNoteFile(state.noteIdx + 1))
       };
     default:
       return state;
@@ -45,11 +42,10 @@ const useStyles = makeStyles({
 
 const String = ({ initNoteIdx }) => {
   const classes = useStyles();
-  const soundFileName = notes_list[initNoteIdx].replace("#", "s");
   const initState = {
     noteIdx: initNoteIdx,
     text: notes_list[initNoteIdx],
-    sound: new Audio(`/sound-files/${soundFileName}.mp3`)
+    sound: new Audio(indexToNoteFile(initNoteIdx))
   };
 
   const [currentNote, dispatch] = useReducer(pitchShiftReducer, initState);
@@ -65,6 +61,7 @@ const String = ({ initNoteIdx }) => {
   };
 
   useEffect(() => {
+    //error on first load
     //console.log(currentNote);
     //currentNote.sound.play();
   }, [currentNote]);
@@ -89,12 +86,9 @@ const String = ({ initNoteIdx }) => {
 export const StringGroup = () => {
   return (
     <Container>
-      <String initNoteIdx={40} />
-      <String initNoteIdx={35} />
-      <String initNoteIdx={31} />
-      <String initNoteIdx={26} />
-      <String initNoteIdx={21} />
-      <String initNoteIdx={16} />
+      {tunings.standard.map((v, i) => (
+        <String key={i} initNoteIdx={v} />
+      ))}
     </Container>
   );
 };
