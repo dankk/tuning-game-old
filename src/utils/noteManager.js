@@ -1,4 +1,4 @@
-export const tunings = {
+const tunings = {
   //string 1 - 6
   standard: [40, 35, 31, 26, 21, 16]
 };
@@ -30,4 +30,9 @@ export const indexToNoteFile = idx => {
   return `/sound-files/${soundFileName}.mp3`;
 };
 
-//get random notes
+export const getStartingNotes = () => {
+  //based on difficulty selection?
+  return tunings.standard.map(v => {
+    return v + Math.floor(Math.random() * 10) - 5;
+  });
+};

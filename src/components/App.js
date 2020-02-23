@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StringGroup } from "./String";
+import StringGroup from "./StringGroup";
 
 function App() {
   return <StringGroup />;

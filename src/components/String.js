@@ -1,9 +1,9 @@
-import React, { useState, useReducer, useEffect, useCallback } from "react";
+import React, { useReducer, useEffect, useCallback } from "react";
 
 import { Paper, Grid, Button, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { indexToNoteFile, tunings, notes_list } from "./utils/noteManager";
+import { indexToNoteFile, notes_list } from "../utils/noteManager";
 
 const pitchShiftReducer = (state, action) => {
   //console.log(state);
@@ -80,15 +80,5 @@ const String = ({ initNoteIdx }) => {
         <Button onClick={() => handleNoteChange("sharp")}>#</Button>
       </Grid>
     </Grid>
-  );
-};
-
-export const StringGroup = () => {
-  return (
-    <Container>
-      {tunings.standard.map((v, i) => (
-        <String key={i} initNoteIdx={v} />
-      ))}
-    </Container>
   );
 };
