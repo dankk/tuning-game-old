@@ -37,10 +37,14 @@ const useStyles = makeStyles({
   },
   string: {
     textAlign: "center"
+  },
+  stringWrong: {
+    textAlign: "center",
+    backgroundColor: "red"
   }
 });
 
-const String = ({ initNoteIdx }) => {
+const String = ({ initNoteIdx, correctNoteIdx }) => {
   const classes = useStyles();
   const initState = {
     noteIdx: initNoteIdx,
@@ -72,7 +76,14 @@ const String = ({ initNoteIdx }) => {
         <Button onClick={() => handleNoteChange("flat")}>♭</Button>
       </Grid>
       <Grid xs={6} item>
-        <Paper onClick={handleNoteClick} className={classes.string}>
+        <Paper
+          onClick={handleNoteClick}
+          className={
+            currentNote.noteIdx != correctNoteIdx
+              ? classes.stringWrong
+              : classes.string
+          }
+        >
           {currentNote.text}
         </Paper>
       </Grid>
@@ -82,3 +93,5 @@ const String = ({ initNoteIdx }) => {
     </Grid>
   );
 };
+
+export default String;

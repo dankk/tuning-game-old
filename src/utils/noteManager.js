@@ -31,8 +31,14 @@ export const indexToNoteFile = idx => {
 };
 
 export const getStartingNotes = () => {
+  //return list of [correctNote, randNote]
   //based on difficulty selection?
+  const doRand = () => Math.floor(Math.random() * 2); //0 or 1
+  const randRange = 3; //pick note in range + - this value
   return tunings.standard.map(v => {
-    return v + Math.floor(Math.random() * 10) - 5;
+    return [
+      v,
+      doRand() ? v + Math.floor(Math.random() * randRange * 2) - randRange : v
+    ];
   });
 };
