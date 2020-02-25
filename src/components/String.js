@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useCallback } from "react";
 
-import { Paper, Grid, Button, Container } from "@material-ui/core";
+import { Paper, Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { indexToNoteFile, notes_list } from "../utils/noteManager";
@@ -38,13 +38,13 @@ const useStyles = makeStyles({
   string: {
     textAlign: "center"
   },
-  stringWrong: {
+  stringBad: {
     textAlign: "center",
     backgroundColor: "red"
   }
 });
 
-const String = ({ initNoteIdx, correctNoteIdx }) => {
+const String = ({ initNoteIdx, correctNoteIdx, isBad }) => {
   const classes = useStyles();
   const initState = {
     noteIdx: initNoteIdx,
@@ -65,9 +65,10 @@ const String = ({ initNoteIdx, correctNoteIdx }) => {
   };
 
   useEffect(() => {
-    //error on first load
-    //console.log(currentNote);
-    //currentNote.sound.play();
+    const p = currentNote.sound.play();
+    if (p !== undefined) {
+      p.catch(error => {}).then(() => {});
+    }
   }, [currentNote]);
 
   return (
@@ -78,11 +79,7 @@ const String = ({ initNoteIdx, correctNoteIdx }) => {
       <Grid xs={6} item>
         <Paper
           onClick={handleNoteClick}
-          className={
-            currentNote.noteIdx != correctNoteIdx
-              ? classes.stringWrong
-              : classes.string
-          }
+          className={isBad ? classes.stringBad : classes.string}
         >
           {currentNote.text}
         </Paper>

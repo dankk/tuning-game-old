@@ -8,7 +8,12 @@ const StringGroup = () => {
   return (
     <Container>
       {getStartingNotes().map((v, i) => (
-        <String key={i} initNoteIdx={v[1]} correctNoteIdx={v[0]} />
+        <String
+          key={i}
+          initNoteIdx={v[1]}
+          correctNoteIdx={v[0]}
+          isBad={v[1] !== v[0]}
+        />
       ))}
     </Container>
   );
