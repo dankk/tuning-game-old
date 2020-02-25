@@ -4,6 +4,7 @@ import { Paper, Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { indexToNoteFile, notes_list } from "../utils/noteManager";
+import StringHint from "./StringHint";
 
 const pitchShiftReducer = (state, action) => {
   //console.log(state);
@@ -81,12 +82,13 @@ const String = ({ initNoteIdx, correctNoteIdx, isBad }) => {
           onClick={handleNoteClick}
           className={isBad ? classes.stringBad : classes.string}
         >
-          {currentNote.text}
+          {isBad ? "?" : currentNote.text}
         </Paper>
       </Grid>
       <Grid item>
         <Button onClick={() => handleNoteChange("sharp")}>#</Button>
       </Grid>
+      {isBad ? <StringHint noteIdx={correctNoteIdx} /> : null}
     </Grid>
   );
 };

@@ -8,7 +8,7 @@ const StringGroup = () => {
   return (
     <Container>
       {getStartingNotes().map((v, i) => (
-        <String
+        <String //make new string row component
           key={i}
           initNoteIdx={v[1]}
           correctNoteIdx={v[0]}
