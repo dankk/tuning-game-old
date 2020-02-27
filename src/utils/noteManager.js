@@ -1,6 +1,6 @@
 const tunings = {
   //string 1 - 6
-  standard: [40, 35, 31, 26, 21, 16]
+  standard: [28, 23, 19, 14, 9, 4]
 };
 
 const tones_list = [
@@ -18,7 +18,7 @@ const tones_list = [
   "B"
 ];
 
-const octs_list = [1, 2, 3, 4];
+const octs_list = [2, 3, 4, 5];
 
 export const notes_list = octs_list.reduce((notes, oct) => {
   const oct_notes = tones_list.map(n => `${n}${oct}`);

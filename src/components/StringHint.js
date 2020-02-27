@@ -5,7 +5,7 @@ import { indexToNoteFile } from "../utils/noteManager";
 const StringHint = ({ noteIdx }) => {
   console.log(noteIdx);
   const initState = {
-    timeClicked: 0,
+    timesClicked: 0,
     sound: new Audio(indexToNoteFile(noteIdx))
   };
   const [state, setState] = useState(initState);
