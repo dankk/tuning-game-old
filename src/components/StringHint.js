@@ -1,25 +1,31 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { indexToNoteFile } from "../utils/noteManager";
 
 const StringHint = ({ noteIdx }) => {
-  console.log(noteIdx);
+  console.log("rerender :/");
+
   const initState = {
-    timesClicked: 0,
-    sound: new Audio(indexToNoteFile(noteIdx))
+    soundPath: indexToNoteFile(noteIdx)
+    // sound: new Audio(indexToNoteFile(noteIdx))
   };
-  const [state, setState] = useState(initState);
+  const [state] = useState(initState);
+
+  const soundFile = new Audio(state.soundPath);
 
   const handleClick = () => {
-    state.sound.currentTime = 0;
-    const p = state.sound.play();
+    soundFile.currentTime = 0;
+    const p = soundFile.play();
     if (p !== undefined) {
       p.catch(error => {}).then(() => {});
     }
-    setState({ ...state, timeClicked: state.timeClicked + 1 });
   };
 
-  return <Button onClick={handleClick}>Hint</Button>;
+  return (
+    <Grid item>
+      <Button onClick={handleClick}>Hint</Button>
+    </Grid>
+  );
 };
 
 export default StringHint;

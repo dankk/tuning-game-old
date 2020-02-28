@@ -1,10 +1,9 @@
-import React, { useReducer, useEffect, useCallback } from "react";
+import React, { useReducer, useEffect } from "react";
 
 import { Paper, Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { indexToNoteFile, notes_list } from "../utils/noteManager";
-import StringHint from "./StringHint";
 
 const pitchShiftReducer = (state, action) => {
   //console.log(state);
@@ -16,7 +15,8 @@ const pitchShiftReducer = (state, action) => {
       return {
         noteIdx: state.noteIdx - 1,
         text: notes_list[state.noteIdx - 1],
-        sound: new Audio(indexToNoteFile(state.noteIdx - 1))
+        soundPath: indexToNoteFile(state.noteIdx - 1)
+        // sound: new Audio(indexToNoteFile(state.noteIdx - 1))
       };
     case "sharp":
       if (state.noteIdx >= notes_list.length - 1) {
@@ -25,7 +25,8 @@ const pitchShiftReducer = (state, action) => {
       return {
         noteIdx: state.noteIdx + 1,
         text: notes_list[state.noteIdx + 1],
-        sound: new Audio(indexToNoteFile(state.noteIdx + 1))
+        soundPath: indexToNoteFile(state.noteIdx + 1)
+        // sound: new Audio(indexToNoteFile(state.noteIdx + 1))
       };
     default:
       return state;
@@ -50,45 +51,51 @@ const String = ({ initNoteIdx, correctNoteIdx, isBad }) => {
   const initState = {
     noteIdx: initNoteIdx,
     text: notes_list[initNoteIdx],
-    sound: new Audio(indexToNoteFile(initNoteIdx))
+    soundPath: indexToNoteFile(initNoteIdx)
+    // sound: new Audio(indexToNoteFile(initNoteIdx))
   };
 
   const [currentNote, dispatch] = useReducer(pitchShiftReducer, initState);
 
-  const handleNoteClick = useCallback(() => {
-    currentNote.sound.currentTime = 0;
-    currentNote.sound.play();
+  const soundFile = new Audio(currentNote.soundPath);
+
+  const handleNoteClick = () => {
+    soundFile.currentTime = 0;
+    soundFile.play();
     console.log(`clicked ${currentNote.text}!`);
-  }, [currentNote]);
+  };
 
   const handleNoteChange = shift => {
     dispatch({ type: shift });
   };
 
   useEffect(() => {
-    const p = currentNote.sound.play();
+    const p = soundFile.play();
     if (p !== undefined) {
       p.catch(error => {}).then(() => {});
     }
-  }, [currentNote]);
+  }, [soundFile]);
+
+  console.log("render");
 
   return (
-    <Grid container direction="row" className={classes.stringRow}>
-      <Grid item>
-        <Button onClick={() => handleNoteChange("flat")}>♭</Button>
+    <Grid item>
+      <Grid container direction="row" className={classes.stringRow}>
+        <Grid item>
+          <Button onClick={() => handleNoteChange("flat")}>♭</Button>
+        </Grid>
+        <Grid item>
+          <Paper
+            onClick={handleNoteClick}
+            className={isBad ? classes.stringBad : classes.string}
+          >
+            {isBad ? "?" : currentNote.text}
+          </Paper>
+        </Grid>
+        <Grid item>
+          <Button onClick={() => handleNoteChange("sharp")}>#</Button>
+        </Grid>
       </Grid>
-      <Grid xs={6} item>
-        <Paper
-          onClick={handleNoteClick}
-          className={isBad ? classes.stringBad : classes.string}
-        >
-          {isBad ? "?" : currentNote.text}
-        </Paper>
-      </Grid>
-      <Grid item>
-        <Button onClick={() => handleNoteChange("sharp")}>#</Button>
-      </Grid>
-      {isBad ? <StringHint noteIdx={correctNoteIdx} /> : null}
     </Grid>
   );
 };
