@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { indexToNoteFile, notes_list } from "../utils/noteManager";
 
 const pitchShiftReducer = (state, action) => {
-  //console.log(state);
   switch (action.type) {
     case "flat":
       if (state.noteIdx <= 0) {
@@ -16,7 +15,6 @@ const pitchShiftReducer = (state, action) => {
         noteIdx: state.noteIdx - 1,
         text: notes_list[state.noteIdx - 1],
         soundPath: indexToNoteFile(state.noteIdx - 1)
-        // sound: new Audio(indexToNoteFile(state.noteIdx - 1))
       };
     case "sharp":
       if (state.noteIdx >= notes_list.length - 1) {
@@ -26,7 +24,6 @@ const pitchShiftReducer = (state, action) => {
         noteIdx: state.noteIdx + 1,
         text: notes_list[state.noteIdx + 1],
         soundPath: indexToNoteFile(state.noteIdx + 1)
-        // sound: new Audio(indexToNoteFile(state.noteIdx + 1))
       };
     default:
       return state;
@@ -34,8 +31,9 @@ const pitchShiftReducer = (state, action) => {
 };
 
 const useStyles = makeStyles({
-  stringRow: {
-    alignItems: "center"
+  stringMain: {
+    alignItems: "center",
+    maxWidth: "500px"
   },
   string: {
     textAlign: "center"
@@ -52,7 +50,6 @@ const String = ({ initNoteIdx, correctNoteIdx, isBad }) => {
     noteIdx: initNoteIdx,
     text: notes_list[initNoteIdx],
     soundPath: indexToNoteFile(initNoteIdx)
-    // sound: new Audio(indexToNoteFile(initNoteIdx))
   };
 
   const [currentNote, dispatch] = useReducer(pitchShiftReducer, initState);
@@ -79,22 +76,20 @@ const String = ({ initNoteIdx, correctNoteIdx, isBad }) => {
   console.log("render");
 
   return (
-    <Grid item>
-      <Grid container direction="row" className={classes.stringRow}>
-        <Grid item>
-          <Button onClick={() => handleNoteChange("flat")}>♭</Button>
-        </Grid>
-        <Grid item>
-          <Paper
-            onClick={handleNoteClick}
-            className={isBad ? classes.stringBad : classes.string}
-          >
-            {isBad ? "?" : currentNote.text}
-          </Paper>
-        </Grid>
-        <Grid item>
-          <Button onClick={() => handleNoteChange("sharp")}>#</Button>
-        </Grid>
+    <Grid container direction="row" className={classes.stringMain}>
+      <Grid item xs={2}>
+        <Button onClick={() => handleNoteChange("flat")}>♭</Button>
+      </Grid>
+      <Grid item xs={8}>
+        <Paper
+          onClick={handleNoteClick}
+          className={isBad ? classes.stringBad : classes.string}
+        >
+          {isBad ? "?" : currentNote.text}
+        </Paper>
+      </Grid>
+      <Grid item xs={2}>
+        <Button onClick={() => handleNoteChange("sharp")}>#</Button>
       </Grid>
     </Grid>
   );

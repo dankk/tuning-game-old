@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { indexToNoteFile } from "../utils/noteManager";
 
 const StringHint = ({ noteIdx }) => {
@@ -7,7 +7,6 @@ const StringHint = ({ noteIdx }) => {
 
   const initState = {
     soundPath: indexToNoteFile(noteIdx)
-    // sound: new Audio(indexToNoteFile(noteIdx))
   };
   const [state] = useState(initState);
 
@@ -21,11 +20,7 @@ const StringHint = ({ noteIdx }) => {
     }
   };
 
-  return (
-    <Grid item>
-      <Button onClick={handleClick}>Hint</Button>
-    </Grid>
-  );
+  return <Button onClick={handleClick}>Hint</Button>;
 };
 
 export default StringHint;

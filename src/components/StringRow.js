@@ -3,13 +3,20 @@ import String from "./String";
 import StringHint from "./StringHint";
 import { getStartingNotes } from "../utils/noteManager";
 
-import { Grid } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+  stringRow: {
+    padding: theme.spacing(1, 0)
+  }
+}));
 
 const StringRow = () => {
+  const classes = useStyles();
   return (
-    <Grid container direction="column">
+    <>
       {getStartingNotes().map((v, i) => [
-        <Grid container direction="row" key={i}>
+        <Grid container direction="row" key={i} className={classes.stringRow}>
           <String
             key={i + 100}
             initNoteIdx={v[1]}
@@ -19,7 +26,7 @@ const StringRow = () => {
           {v[1] !== v[0] ? <StringHint key={i + 200} noteIdx={v[0]} /> : null}
         </Grid>
       ])}
-    </Grid>
+    </>
   );
 };
 
