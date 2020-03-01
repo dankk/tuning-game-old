@@ -23,7 +23,9 @@ const StringRow = () => {
             correctNoteIdx={v[0]}
             isBad={v[1] !== v[0]}
           />
-          {v[1] !== v[0] ? <StringHint key={i + 200} noteIdx={v[0]} /> : null}
+          {v[1] !== v[0] ? (
+            <StringHint key={i + 200} noteIdx={v[0]} maxHints={2} />
+          ) : null}
         </Grid>
       ])}
     </>
