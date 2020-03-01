@@ -78,7 +78,11 @@ const String = ({ initNoteIdx, correctNoteIdx, isBad }) => {
   return (
     <Grid container direction="row" className={classes.stringMain}>
       <Grid item xs={2}>
-        <Button onClick={() => handleNoteChange("flat")}>♭</Button>
+        {isBad ? (
+          <Button onClick={() => handleNoteChange("flat")}>♭</Button>
+        ) : (
+          <></>
+        )}
       </Grid>
       <Grid item xs={8}>
         <Paper
@@ -89,7 +93,11 @@ const String = ({ initNoteIdx, correctNoteIdx, isBad }) => {
         </Paper>
       </Grid>
       <Grid item xs={2}>
-        <Button onClick={() => handleNoteChange("sharp")}>#</Button>
+        {isBad ? (
+          <Button onClick={() => handleNoteChange("sharp")}>#</Button>
+        ) : (
+          <></>
+        )}
       </Grid>
     </Grid>
   );
