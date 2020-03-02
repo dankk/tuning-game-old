@@ -27,7 +27,7 @@ const StringHint = ({ noteIdx, maxHints }) => {
   };
 
   if (state.hideHint) {
-    return null;
+    return <></>;
   }
   return <Button onClick={handleClick}>Hint</Button>;
 };

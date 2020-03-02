@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import String from "./String";
 import StringHint from "./StringHint";
-// import { getStartingNotes } from "../utils/noteManager";
 
 import { Grid, makeStyles } from "@material-ui/core";
 
@@ -11,26 +10,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getStartingNotes = async () => {
-  const res = await fetch("http://localhost:5000/start");
-  const data = await res.json();
-  console.log(data);
-  return data;
-};
-
-const StringRow = () => {
+const StringGroup = ({ startingNotes, ...props }) => {
   const classes = useStyles();
-
-  const [startingNotes, setStartingNotes] = useState(null);
-
-  useEffect(() => {
-    getStartingNotes().then(res => setStartingNotes(res));
-  }, []);
-  console.log(startingNotes);
-
-  if (!startingNotes) {
-    return <>Loading...</>;
-  }
 
   return (
     <>
@@ -51,4 +32,4 @@ const StringRow = () => {
   );
 };
 
-export default StringRow;
+export default StringGroup;

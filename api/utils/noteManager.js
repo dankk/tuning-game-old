@@ -20,13 +20,13 @@ const tones_list = [
 
 const octs_list = [2, 3, 4, 5];
 
-const notes_list = octs_list.reduce((notes, oct) => {
+const notesList = octs_list.reduce((notes, oct) => {
   const oct_notes = tones_list.map(n => `${n}${oct}`);
   return [...notes, ...oct_notes];
 }, []);
 
 const indexToNoteFile = idx => {
-  const soundFileName = notes_list[idx].replace("#", "s");
+  const soundFileName = notesList[idx].replace("#", "s");
   return `/sound-files/${soundFileName}.mp3`;
 };
 
@@ -40,5 +40,6 @@ module.exports = {
         doRand() ? v + Math.floor(Math.random() * randRange * 2) - randRange : v
       ];
     });
-  }
+  },
+  notesList
 };

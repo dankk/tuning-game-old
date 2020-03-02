@@ -44,7 +44,7 @@ const useStyles = makeStyles({
   }
 });
 
-const String = ({ initNoteIdx, correctNoteIdx, isBad }) => {
+const String = ({ initNoteIdx, isBad }) => {
   const classes = useStyles();
   const initState = {
     noteIdx: initNoteIdx,
