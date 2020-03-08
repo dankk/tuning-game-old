@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Grid, makeStyles } from "@material-ui/core";
 import { indexToNoteFile } from "../utils/noteManager";
 
+const useStyle = makeStyles({
+  hintButton: { position: "absolute", right: 300, maxWidth: 100 }
+});
+
 const StringHint = ({ noteIdx, maxHints }) => {
+  const classes = useStyle();
   let timesClicked = 0;
 
   const initState = {
@@ -26,10 +31,15 @@ const StringHint = ({ noteIdx, maxHints }) => {
     console.log(timesClicked < maxHints);
   };
 
-  if (state.hideHint) {
-    return <></>;
-  }
-  return <Button onClick={handleClick}>Hint</Button>;
+  return (
+    <Grid item className={classes.hintButton}>
+      {!state.hideHint ? (
+        <Button onClick={handleClick} size={"small"}>
+          Hint
+        </Button>
+      ) : null}
+    </Grid>
+  );
 };
 
 export default StringHint;

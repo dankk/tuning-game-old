@@ -6,7 +6,9 @@ import { Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   stringRow: {
-    padding: theme.spacing(1, 0)
+    justifyContent: "center",
+    alignItems: "center",
+    padding: theme.spacing(0.5, 0)
   }
 }));
 
@@ -16,7 +18,13 @@ const StringGroup = ({ startingNotes, ...props }) => {
   return (
     <>
       {startingNotes.map((v, i) => [
-        <Grid container direction="row" key={i} className={classes.stringRow}>
+        <Grid
+          container
+          direction="row"
+          wrap={"nowrap"}
+          className={classes.stringRow}
+          key={i}
+        >
           <String
             key={i + 100}
             initNoteIdx={v[1]}
@@ -25,7 +33,9 @@ const StringGroup = ({ startingNotes, ...props }) => {
           />
           {v[1] !== v[0] ? (
             <StringHint key={i + 200} noteIdx={v[0]} maxHints={2} />
-          ) : null}
+          ) : (
+            <Grid item style={{ maxWidth: 100 }} />
+          )}
         </Grid>
       ])}
     </>

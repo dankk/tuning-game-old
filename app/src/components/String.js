@@ -31,17 +31,10 @@ const pitchShiftReducer = (state, action) => {
 };
 
 const useStyles = makeStyles({
-  stringMain: {
-    alignItems: "center",
-    maxWidth: "500px"
-  },
-  string: {
-    textAlign: "center"
-  },
-  stringBad: {
-    textAlign: "center",
-    backgroundColor: "red"
-  }
+  stringMain: { justifyContent: "center", alignItems: "center" },
+  stringNote: { maxWidth: 500 },
+  stringNoteBad: { maxWidth: 500, backgroundColor: "red" },
+  changeButton: { maxWidth: 75 }
 });
 
 const String = ({ initNoteIdx, isBad }) => {
@@ -77,24 +70,28 @@ const String = ({ initNoteIdx, isBad }) => {
 
   return (
     <Grid container direction="row" className={classes.stringMain}>
-      <Grid item xs={2}>
+      <Grid item xs={3} className={classes.changeButton}>
         {isBad ? (
-          <Button onClick={() => handleNoteChange("flat")}>♭</Button>
+          <Button onClick={() => handleNoteChange("flat")} size={"small"}>
+            ♭
+          </Button>
         ) : (
           <></>
         )}
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={3} className={classes.stringNote}>
         <Paper
           onClick={handleNoteClick}
-          className={isBad ? classes.stringBad : classes.string}
+          className={isBad ? classes.stringNoteBad : classes.stringNote}
         >
           {isBad ? "?" : currentNote.text}
         </Paper>
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={3} className={classes.changeButton}>
         {isBad ? (
-          <Button onClick={() => handleNoteChange("sharp")}>#</Button>
+          <Button onClick={() => handleNoteChange("sharp")} size={"small"}>
+            #
+          </Button>
         ) : (
           <></>
         )}

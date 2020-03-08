@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import StringGroup from "./StringGroup";
+import { Container, makeStyles, Button } from "@material-ui/core";
+
+const useStyle = makeStyles({
+  root: {
+    textAlign: "center"
+  }
+});
 
 const getStartingData = async () => {
   const res = await fetch("http://localhost:5000/start");
@@ -10,6 +17,7 @@ const getStartingData = async () => {
 };
 
 function App() {
+  const classes = useStyle();
   const [startingData, setStartingData] = useState(null);
 
   useEffect(() => {
@@ -17,12 +25,16 @@ function App() {
       .then(res => setStartingData(res))
       .catch(error => console.log(error));
   }, []);
-  // console.log(startingData);
 
   if (!startingData) {
     return <>Loading...</>;
   }
-  return <StringGroup {...startingData} />;
+  return (
+    <Container className={classes.root}>
+      <StringGroup {...startingData} />
+      <Button>Submit</Button>
+    </Container>
+  );
 }
 
 export default App;
