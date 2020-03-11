@@ -11,6 +11,7 @@ const pitchShiftReducer = (state, action) => {
       if (state.noteIdx <= 0) {
         return state;
       }
+      action.handleNoteChange(action.stringIdx, state.noteIdx - 1);
       return {
         noteIdx: state.noteIdx - 1,
         text: notes_list[state.noteIdx - 1],
@@ -20,6 +21,7 @@ const pitchShiftReducer = (state, action) => {
       if (state.noteIdx >= notes_list.length - 1) {
         return state;
       }
+      action.handleNoteChange(action.stringIdx, state.noteIdx + 1);
       return {
         noteIdx: state.noteIdx + 1,
         text: notes_list[state.noteIdx + 1],
@@ -37,7 +39,7 @@ const useStyles = makeStyles({
   changeButton: { maxWidth: 75 }
 });
 
-const String = ({ initNoteIdx, isBad }) => {
+const String = ({ initNoteIdx, isBad, ...props }) => {
   const classes = useStyles();
   const initState = {
     noteIdx: initNoteIdx,
@@ -55,8 +57,12 @@ const String = ({ initNoteIdx, isBad }) => {
     console.log(`clicked ${currentNote.text}!`);
   };
 
-  const handleNoteChange = shift => {
-    dispatch({ type: shift });
+  const handleNoteChange = (shift, stringIdx) => {
+    dispatch({
+      type: shift,
+      stringIdx: stringIdx,
+      handleNoteChange: props.handleNoteChange
+    });
   };
 
   useEffect(() => {
@@ -72,7 +78,10 @@ const String = ({ initNoteIdx, isBad }) => {
     <Grid container direction="row" className={classes.stringMain}>
       <Grid item xs={3} className={classes.changeButton}>
         {isBad ? (
-          <Button onClick={() => handleNoteChange("flat")} size={"small"}>
+          <Button
+            onClick={() => handleNoteChange("flat", props.stringIdx)}
+            size={"small"}
+          >
             ♭
           </Button>
         ) : (
@@ -89,7 +98,10 @@ const String = ({ initNoteIdx, isBad }) => {
       </Grid>
       <Grid item xs={3} className={classes.changeButton}>
         {isBad ? (
-          <Button onClick={() => handleNoteChange("sharp")} size={"small"}>
+          <Button
+            onClick={() => handleNoteChange("sharp", props.stringIdx)}
+            size={"small"}
+          >
             #
           </Button>
         ) : (

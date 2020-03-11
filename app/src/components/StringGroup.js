@@ -27,9 +27,11 @@ const StringGroup = ({ startingNotes, ...props }) => {
         >
           <String
             key={i + 100}
+            stringIdx={i}
             initNoteIdx={v[1]}
             correctNoteIdx={v[0]}
             isBad={v[1] !== v[0]}
+            handleNoteChange={props.handleNoteChange}
           />
           {v[1] !== v[0] ? (
             <StringHint key={i + 200} noteIdx={v[0]} maxHints={2} />
