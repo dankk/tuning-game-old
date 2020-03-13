@@ -6,10 +6,7 @@ const app = express();
 app.use(cors());
 
 app.get("/start", (req, res) => {
-  res.send({
-    startingNotes: noteManager.getStartingNotes(),
-    notesList: noteManager.notesList
-  });
+  res.send(noteManager.getStartingData());
 });
 
 app.listen(5000, () => {

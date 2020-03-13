@@ -14,19 +14,17 @@ const useStyle = makeStyles({
 const getStartingData = async () => {
   const res = await fetch("http://localhost:5000/start");
   const data = await res.json();
-  // console.log(data);
   return data;
 };
 
 let selectedNotes;
+let correctNotes;
 
 function App() {
   const classes = useStyle();
   const [startingData, setStartingData] = useState(null);
-  // const [selectedNotes, setSelectedNotes] = useState(null);
 
   const handleNoteChange = (stringIdx, noteIdx) => {
-    // setSelectedNotes(s => ({ ...s, [stringIdx]: noteIdx }));
     selectedNotes = [
       ...selectedNotes.slice(0, stringIdx),
       noteIdx,
@@ -38,8 +36,8 @@ function App() {
     getStartingData()
       .then(res => {
         setStartingData(res);
-        selectedNotes = res.startingNotes.map(v => v[0]);
-        // setSelectedNotes(res.startingNotes.map(v => v[0]));
+        selectedNotes = res.startingNotes;
+        correctNotes = res.correctNotes;
       })
       .catch(error => console.log(error));
   }, []);
@@ -50,7 +48,10 @@ function App() {
   return (
     <Container className={classes.root}>
       <StringGroup {...startingData} handleNoteChange={handleNoteChange} />
-      <Button type="submit" onClick={() => handleSubmit(selectedNotes)}>
+      <Button
+        type="submit"
+        onClick={() => handleSubmit(selectedNotes, correctNotes)}
+      >
         Submit
       </Button>
     </Container>

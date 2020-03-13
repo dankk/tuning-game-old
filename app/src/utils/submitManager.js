@@ -1,3 +1,3 @@
-export const handleSubmit = selectedNotes => {
-  console.log(selectedNotes);
+export const handleSubmit = (selected, correct) => {
+  console.log(selected.toString() === correct.toString());
 };

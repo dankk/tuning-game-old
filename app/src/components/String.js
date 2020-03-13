@@ -3,7 +3,7 @@ import React, { useReducer, useEffect } from "react";
 import { Paper, Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { indexToNoteFile, notes_list } from "../utils/noteManager";
+import { indexToNoteFile } from "../utils/noteHandler";
 
 const pitchShiftReducer = (state, action) => {
   switch (action.type) {
@@ -14,18 +14,18 @@ const pitchShiftReducer = (state, action) => {
       action.handleNoteChange(action.stringIdx, state.noteIdx - 1);
       return {
         noteIdx: state.noteIdx - 1,
-        text: notes_list[state.noteIdx - 1],
-        soundPath: indexToNoteFile(state.noteIdx - 1)
+        text: action.notesList[state.noteIdx - 1],
+        soundPath: indexToNoteFile(state.noteIdx - 1, action.notesList)
       };
     case "sharp":
-      if (state.noteIdx >= notes_list.length - 1) {
+      if (state.noteIdx >= action.notesList.length - 1) {
         return state;
       }
       action.handleNoteChange(action.stringIdx, state.noteIdx + 1);
       return {
         noteIdx: state.noteIdx + 1,
-        text: notes_list[state.noteIdx + 1],
-        soundPath: indexToNoteFile(state.noteIdx + 1)
+        text: action.notesList[state.noteIdx + 1],
+        soundPath: indexToNoteFile(state.noteIdx + 1, action.notesList)
       };
     default:
       return state;
@@ -39,12 +39,18 @@ const useStyles = makeStyles({
   changeButton: { maxWidth: 75 }
 });
 
-const String = ({ initNoteIdx, isBad, ...props }) => {
+const String = ({ ...props }) => {
+  const isBad = props.isBad;
+  const initNoteIdx = props.initNoteIdx;
+  const notesList = props.notesList;
+  const handleNoteChange = props.handleNoteChange;
+
   const classes = useStyles();
+
   const initState = {
     noteIdx: initNoteIdx,
-    text: notes_list[initNoteIdx],
-    soundPath: indexToNoteFile(initNoteIdx)
+    text: notesList[initNoteIdx],
+    soundPath: indexToNoteFile(initNoteIdx, notesList)
   };
 
   const [currentNote, dispatch] = useReducer(pitchShiftReducer, initState);
@@ -57,11 +63,12 @@ const String = ({ initNoteIdx, isBad, ...props }) => {
     console.log(`clicked ${currentNote.text}!`);
   };
 
-  const handleNoteChange = (shift, stringIdx) => {
+  const dispatchNoteChange = (shift, stringIdx) => {
     dispatch({
       type: shift,
       stringIdx: stringIdx,
-      handleNoteChange: props.handleNoteChange
+      notesList: notesList,
+      handleNoteChange: handleNoteChange
     });
   };
 
@@ -79,7 +86,7 @@ const String = ({ initNoteIdx, isBad, ...props }) => {
       <Grid item xs={3} className={classes.changeButton}>
         {isBad ? (
           <Button
-            onClick={() => handleNoteChange("flat", props.stringIdx)}
+            onClick={() => dispatchNoteChange("flat", props.stringIdx)}
             size={"small"}
           >
             ♭
@@ -99,7 +106,7 @@ const String = ({ initNoteIdx, isBad, ...props }) => {
       <Grid item xs={3} className={classes.changeButton}>
         {isBad ? (
           <Button
-            onClick={() => handleNoteChange("sharp", props.stringIdx)}
+            onClick={() => dispatchNoteChange("sharp", props.stringIdx)}
             size={"small"}
           >
             #

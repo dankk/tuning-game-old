@@ -12,9 +12,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const StringGroup = ({ startingNotes, ...props }) => {
+const StringGroup = ({ ...props }) => {
   const classes = useStyles();
 
+  const startingNotes = props.startingNotes;
+  const correctNotes = props.correctNotes;
+  const handleNoteChange = props.handleNoteChange;
+  const notesList = props.notesList;
   return (
     <>
       {startingNotes.map((v, i) => [
@@ -28,13 +32,19 @@ const StringGroup = ({ startingNotes, ...props }) => {
           <String
             key={i + 100}
             stringIdx={i}
-            initNoteIdx={v[1]}
-            correctNoteIdx={v[0]}
-            isBad={v[1] !== v[0]}
-            handleNoteChange={props.handleNoteChange}
+            initNoteIdx={v}
+            correctNoteIdx={correctNotes[i]}
+            isBad={v !== correctNotes[i]}
+            handleNoteChange={handleNoteChange}
+            notesList={notesList}
           />
-          {v[1] !== v[0] ? (
-            <StringHint key={i + 200} noteIdx={v[0]} maxHints={2} />
+          {v !== correctNotes[i] ? (
+            <StringHint
+              key={i + 200}
+              noteIdx={correctNotes[i]}
+              maxHints={2}
+              notesList={notesList}
+            />
           ) : (
             <Grid item style={{ maxWidth: 100 }} />
           )}

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Button, Grid, makeStyles } from "@material-ui/core";
-import { indexToNoteFile } from "../utils/noteManager";
+import { indexToNoteFile } from "../utils/noteHandler";
 
 const useStyle = makeStyles({
   hintButton: { position: "absolute", right: 300, maxWidth: 100 }
 });
 
-const StringHint = ({ noteIdx, maxHints }) => {
+const StringHint = ({ noteIdx, maxHints, notesList }) => {
   const classes = useStyle();
   let timesClicked = 0;
 
   const initState = {
     hideHint: false,
-    soundPath: indexToNoteFile(noteIdx)
+    soundPath: indexToNoteFile(noteIdx, notesList)
   };
   const [state, setState] = useState(initState);
 

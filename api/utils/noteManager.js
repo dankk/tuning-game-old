@@ -31,15 +31,21 @@ const indexToNoteFile = idx => {
 };
 
 module.exports = {
-  getStartingNotes: () => {
+  getStartingData: () => {
     const doRand = () => Math.floor(Math.random() * 2); //0 or 1
     const randRange = 3; //pick note in range + - this value
-    return tunings.standard.map(v => {
-      return [
-        v,
+    // return tunings.standard.map(v => {
+    //   return [
+    //     v,
+    //     doRand() ? v + Math.floor(Math.random() * randRange * 2) - randRange : v
+    //   ];
+    // });
+    return {
+      correctNotes: tunings.standard,
+      startingNotes: tunings.standard.map(v =>
         doRand() ? v + Math.floor(Math.random() * randRange * 2) - randRange : v
-      ];
-    });
-  },
-  notesList
+      ),
+      notesList: notesList
+    };
+  }
 };
