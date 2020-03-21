@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import StringGroup from "./StringGroup";
 import { Container, makeStyles, Button } from "@material-ui/core";
 
 import { handleSubmit } from "../utils/submitManager";
+import { TestSubmit } from "./TestSubmit";
 
 const useStyle = makeStyles({
   root: {
@@ -46,22 +47,22 @@ function App() {
     fetchData();
   }, [round]);
 
+  const doSubmit = useCallback((selectedNotes, correctNotes) => {
+    //hacky ?
+    setTimeout(() => {
+      setRound(s => s + 1);
+      setStartingData(null);
+    }, 2000);
+    return handleSubmit(selectedNotes, correctNotes);
+  }, []);
+
   if (!startingData) {
     return null;
   }
   return (
     <Container className={classes.root}>
       <StringGroup {...startingData} handleNoteChange={handleNoteChange} />
-      <Button
-        type="submit"
-        onClick={() => {
-          handleSubmit(selectedNotes, correctNotes);
-          setStartingData(null); //that did it??
-          setRound(r => r + 1);
-        }}
-      >
-        Submit
-      </Button>
+      <TestSubmit submitHandler={() => doSubmit(selectedNotes, correctNotes)} />
     </Container>
   );
 }
