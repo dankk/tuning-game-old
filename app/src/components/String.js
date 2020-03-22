@@ -72,13 +72,6 @@ const String = ({ ...props }) => {
     });
   };
 
-  useEffect(() => {
-    const p = soundFile.play();
-    if (p !== undefined) {
-      p.catch(error => {}).then(() => {});
-    }
-  }, [soundFile]);
-
   console.log("render");
 
   return (

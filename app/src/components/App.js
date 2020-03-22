@@ -5,6 +5,7 @@ import { Container, makeStyles, Button } from "@material-ui/core";
 
 import { handleSubmit } from "../utils/submitManager";
 import { TestSubmit } from "./TestSubmit";
+import { indexToNoteFile } from "../utils/noteHandler";
 
 const useStyle = makeStyles({
   root: {
@@ -24,7 +25,7 @@ let correctNotes;
 function App() {
   const classes = useStyle();
   const [startingData, setStartingData] = useState(null);
-  const [round, setRound] = useState(0);
+  const [round, setRound] = useState({ value: 0 });
 
   const handleNoteChange = (stringIdx, noteIdx) => {
     selectedNotes = [
@@ -32,6 +33,10 @@ function App() {
       noteIdx,
       ...selectedNotes.slice(stringIdx + 1)
     ];
+    //play note
+    const newSound = indexToNoteFile(noteIdx, startingData.notesList);
+    console.log(newSound);
+    new Audio(newSound).play();
   };
 
   useEffect(() => {
@@ -49,18 +54,28 @@ function App() {
 
   const doSubmit = useCallback((selectedNotes, correctNotes) => {
     //hacky ?
+    const submitResult = handleSubmit(selectedNotes, correctNotes);
+    const setRoundFunc = () => {
+      console.log("in setroundfunc");
+      console.log(submitResult);
+      submitResult
+        ? setRound(s => ({ value: s.value + 1 }))
+        : setRound({ value: 0 });
+    };
     setTimeout(() => {
-      setRound(s => s + 1);
+      setRoundFunc();
       setStartingData(null);
     }, 2000);
-    return handleSubmit(selectedNotes, correctNotes);
+    return submitResult;
   }, []);
 
   if (!startingData) {
+    console.log("nulling");
     return null;
   }
   return (
     <Container className={classes.root}>
+      Score: {round.value}
       <StringGroup {...startingData} handleNoteChange={handleNoteChange} />
       <TestSubmit submitHandler={() => doSubmit(selectedNotes, correctNotes)} />
     </Container>
