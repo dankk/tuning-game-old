@@ -6,9 +6,8 @@ import { Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   stringRow: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: theme.spacing(0.5, 0)
+    padding: theme.spacing(0.5, 0),
+    justifyContent: "center"
   }
 }));
 

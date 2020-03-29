@@ -33,10 +33,10 @@ const pitchShiftReducer = (state, action) => {
 };
 
 const useStyles = makeStyles({
-  stringMain: { justifyContent: "center", alignItems: "center" },
-  stringNote: { maxWidth: 500 },
-  stringNoteBad: { maxWidth: 500, backgroundColor: "red" },
-  changeButton: { maxWidth: 75 }
+  stringMain: { maxWidth: 350, alignItems: "center" },
+  stringNote: { width: 200 },
+  stringNoteBad: { width: 200, backgroundColor: "red" },
+  changeButton: { width: 75 }
 });
 
 const String = ({ ...props }) => {
@@ -76,7 +76,7 @@ const String = ({ ...props }) => {
 
   return (
     <Grid container direction="row" className={classes.stringMain}>
-      <Grid item xs={3} className={classes.changeButton}>
+      <Grid item className={classes.changeButton}>
         {isBad ? (
           <Button
             onClick={() => dispatchNoteChange("flat", props.stringIdx)}
@@ -88,7 +88,7 @@ const String = ({ ...props }) => {
           <></>
         )}
       </Grid>
-      <Grid item xs={3} className={classes.stringNote}>
+      <Grid item className={classes.stringNote}>
         <Paper
           onClick={handleNoteClick}
           className={isBad ? classes.stringNoteBad : classes.stringNote}
@@ -96,7 +96,7 @@ const String = ({ ...props }) => {
           {isBad ? "?" : currentNote.text}
         </Paper>
       </Grid>
-      <Grid item xs={3} className={classes.changeButton}>
+      <Grid item className={classes.changeButton}>
         {isBad ? (
           <Button
             onClick={() => dispatchNoteChange("sharp", props.stringIdx)}

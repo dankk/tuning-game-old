@@ -3,7 +3,7 @@ import { Button, Grid, makeStyles } from "@material-ui/core";
 import { indexToNoteFile } from "../utils/noteHandler";
 
 const useStyle = makeStyles({
-  hintButton: { position: "absolute", right: 300, maxWidth: 100 }
+  hintButton: { width: 0 }
 });
 
 const StringHint = ({ noteIdx, maxHints, notesList }) => {
