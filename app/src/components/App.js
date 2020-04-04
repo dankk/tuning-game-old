@@ -4,7 +4,8 @@ import StringGroup from "./StringGroup";
 import { Container, makeStyles, Button } from "@material-ui/core";
 
 import { handleSubmit } from "../utils/submitManager";
-import { TestSubmit } from "./TestSubmit";
+import { SubmitButton } from "./SubmitButton";
+import { StartPage } from "./StartPage";
 import { indexToNoteFile } from "../utils/noteHandler";
 
 const useStyle = makeStyles({
@@ -26,6 +27,7 @@ function App() {
   const classes = useStyle();
   const [startingData, setStartingData] = useState(null);
   const [round, setRound] = useState({ value: 0 });
+  const [started, setStarted] = useState(false);
 
   const handleNoteChange = (stringIdx, noteIdx) => {
     selectedNotes = [
@@ -75,9 +77,17 @@ function App() {
   }
   return (
     <Container className={classes.root}>
-      Score: {round.value}
-      <StringGroup {...startingData} handleNoteChange={handleNoteChange} />
-      <TestSubmit submitHandler={() => doSubmit(selectedNotes, correctNotes)} />
+      {!started ? (
+        <StartPage setStarted={() => setStarted(true)} />
+      ) : (
+        <>
+          Score: {round.value}
+          <StringGroup {...startingData} handleNoteChange={handleNoteChange} />
+          <SubmitButton
+            submitHandler={() => doSubmit(selectedNotes, correctNotes)}
+          />
+        </>
+      )}
     </Container>
   );
 }
