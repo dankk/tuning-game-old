@@ -33,7 +33,11 @@ export const SubmitButton = ({ ...props }) => {
 
   return (
     <div>
-      <Button type="submit" disabled={isDisabled} onClick={() => doOnClick()}>
+      <Button
+        variant="outlined"
+        disabled={isDisabled}
+        onClick={() => doOnClick()}
+      >
         Submit
       </Button>
       {result ? (

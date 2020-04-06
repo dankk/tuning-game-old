@@ -10,7 +10,7 @@ import { indexToNoteFile } from "../utils/noteHandler";
 
 const useStyle = makeStyles({
   root: {
-    textAlign: "center"
+    textAlign: "-webkit-center"
   }
 });
 
@@ -28,6 +28,7 @@ function App() {
   const [startingData, setStartingData] = useState(null);
   const [round, setRound] = useState({ value: 0 });
   const [started, setStarted] = useState(false);
+  const [difficulty, setDifficulty] = useState(1);
 
   const handleNoteChange = (stringIdx, noteIdx) => {
     selectedNotes = [
@@ -78,10 +79,15 @@ function App() {
   return (
     <Container className={classes.root}>
       {!started ? (
-        <StartPage setStarted={() => setStarted(true)} />
+        <StartPage
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+          setStarted={() => setStarted(true)}
+        />
       ) : (
         <>
-          Score: {round.value}
+          <div>Difficulty: {difficulty}</div>
+          <div>Score: {round.value}</div>
           <StringGroup {...startingData} handleNoteChange={handleNoteChange} />
           <SubmitButton
             submitHandler={() => doSubmit(selectedNotes, correctNotes)}
