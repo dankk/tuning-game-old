@@ -6,7 +6,8 @@ const app = express();
 app.use(cors());
 
 app.get("/start", (req, res) => {
-  res.send(noteManager.getStartingData());
+  let difficulty = req.query.difficulty;
+  res.send(noteManager.getStartingData(difficulty));
 });
 
 app.listen(5000, () => {

@@ -14,8 +14,10 @@ const useStyle = makeStyles({
   }
 });
 
-const getStartingData = async () => {
-  const res = await fetch("http://localhost:5000/start");
+const getStartingData = async difficulty => {
+  const res = await fetch(
+    `http://localhost:5000/start?difficulty=${difficulty}`
+  );
   const data = await res.json();
   return data;
 };
@@ -28,7 +30,7 @@ function App() {
   const [startingData, setStartingData] = useState(null);
   const [round, setRound] = useState({ value: 0 });
   const [started, setStarted] = useState(false);
-  const [difficulty, setDifficulty] = useState(1);
+  const [difficulty, setDifficulty] = useState(null);
 
   const handleNoteChange = (stringIdx, noteIdx) => {
     selectedNotes = [
@@ -43,8 +45,8 @@ function App() {
   };
 
   useEffect(() => {
-    async function fetchData() {
-      await getStartingData()
+    async function fetchData(difficulty) {
+      await getStartingData(difficulty)
         .then(res => {
           setStartingData(res);
           selectedNotes = res.startingNotes;
@@ -52,8 +54,8 @@ function App() {
         })
         .catch(error => console.log(error));
     }
-    fetchData();
-  }, [round]);
+    fetchData(difficulty);
+  }, [round, difficulty]);
 
   const doSubmit = useCallback((selectedNotes, correctNotes) => {
     //hacky ?
@@ -72,30 +74,32 @@ function App() {
     return submitResult;
   }, []);
 
-  if (!startingData) {
-    console.log("nulling");
-    return null;
+  // if (!startingData) {
+  //   console.log("nulling");
+  //   return null;
+  // }
+
+  if (!started) {
+    return (
+      <Container className={classes.root}>
+        <StartPage setDifficulty={setDifficulty} setStarted={setStarted} />
+      </Container>
+    );
   }
-  return (
-    <Container className={classes.root}>
-      {!started ? (
-        <StartPage
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
-          setStarted={() => setStarted(true)}
+
+  if (startingData) {
+    return (
+      <Container className={classes.root}>
+        <div>Difficulty: {difficulty}</div>
+        <div>Score: {round.value}</div>
+        <StringGroup {...startingData} handleNoteChange={handleNoteChange} />
+        <SubmitButton
+          submitHandler={() => doSubmit(selectedNotes, correctNotes)}
         />
-      ) : (
-        <>
-          <div>Difficulty: {difficulty}</div>
-          <div>Score: {round.value}</div>
-          <StringGroup {...startingData} handleNoteChange={handleNoteChange} />
-          <SubmitButton
-            submitHandler={() => doSubmit(selectedNotes, correctNotes)}
-          />
-        </>
-      )}
-    </Container>
-  );
+      </Container>
+    );
+  }
+  return null;
 }
 
 export default App;

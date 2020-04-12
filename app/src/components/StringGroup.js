@@ -18,6 +18,7 @@ const StringGroup = ({ ...props }) => {
   const correctNotes = props.correctNotes;
   const handleNoteChange = props.handleNoteChange;
   const notesList = props.notesList;
+
   return (
     <>
       {startingNotes.map((v, i) => [

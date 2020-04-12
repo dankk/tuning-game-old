@@ -7,18 +7,24 @@ const useStyles = makeStyles({
   }
 });
 
-export const StartPage = ({ setStarted, difficulty, setDifficulty }) => {
+export const StartPage = ({ setStarted, setDifficulty }) => {
+  const [difficultySelection, setDifficultySelection] = useState(1);
+
   const classes = useStyles();
   const handleChange = (e, v) => {
-    setDifficulty(v);
+    setDifficultySelection(v);
+  };
+  const handleStart = () => {
+    setDifficulty(difficultySelection);
+    setStarted(true);
   };
 
   return (
     <>
-      Difficulty: {difficulty}
+      Difficulty: {difficultySelection}
       <div className={classes.slider}>
         <Slider
-          value={difficulty}
+          value={difficultySelection}
           valueLabelDisplay="auto"
           step={1}
           marks
@@ -27,7 +33,7 @@ export const StartPage = ({ setStarted, difficulty, setDifficulty }) => {
           onChange={handleChange}
         />
       </div>
-      <Button variant="outlined" onClick={setStarted}>
+      <Button variant="outlined" onClick={() => handleStart()}>
         Start
       </Button>
     </>

@@ -31,7 +31,8 @@ const indexToNoteFile = idx => {
 };
 
 module.exports = {
-  getStartingData: () => {
+  getStartingData: difficulty => {
+    console.log(difficulty);
     const doRand = () => Math.floor(Math.random() * 2); //0 or 1
     const randRange = 3; //pick note in range + - this value
     let startingNotes = tunings.standard.map(v =>
