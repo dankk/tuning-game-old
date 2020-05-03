@@ -54,7 +54,9 @@ function App() {
         })
         .catch(error => console.log(error));
     }
-    fetchData(difficulty);
+    if (difficulty) {
+      fetchData(difficulty);
+    }
   }, [round, difficulty]);
 
   const doSubmit = useCallback((selectedNotes, correctNotes) => {

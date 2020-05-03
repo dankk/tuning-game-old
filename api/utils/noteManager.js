@@ -33,19 +33,43 @@ const indexToNoteFile = idx => {
 module.exports = {
   getStartingData: difficulty => {
     console.log(difficulty);
-    const doRand = () => Math.floor(Math.random() * 2); //0 or 1
-    const randRange = 3; //pick note in range + - this value
-    let startingNotes = tunings.standard.map(v =>
-      doRand() ? v + Math.floor(Math.random() * randRange * 2) - randRange : v
-    );
-    if (startingNotes.toString() === tunings.standard.toString()) {
-      let change = Math.floor(Math.random() * randRange * 2) - randRange;
-      while (change === 0) {
-        change = Math.floor(Math.random() * randRange * 2) - randRange;
+
+    const randRange = 3; // +/- this many notes
+
+    let randIndex = [];
+    let startingNotes = tunings.standard.map(v => v);
+    for (let i = 0; i < difficulty; i++) {
+      var r = Math.floor(Math.random() * 6);
+      while (randIndex.includes(r)) {
+        r = Math.floor(Math.random() * 6);
       }
-      //force wrong note
-      startingNotes[Math.floor(Math.random() * 6)] += change;
+      randIndex.push(r);
     }
+    console.log(randIndex);
+    console.log(startingNotes);
+
+    randIndex.forEach(v => {
+      const n = startingNotes[v];
+      let diff = Math.floor(Math.random() * randRange * 2) - randRange;
+      while (diff === 0) {
+        diff = Math.floor(Math.random() * randRange * 2) - randRange;
+      }
+      startingNotes[v] = n + diff;
+    });
+    console.log(startingNotes);
+
+    // const doRand = () => Math.floor(Math.random() * 2); //0 or 1
+    // let startingNotes = tunings.standard.map(v =>
+    //   doRand() ? v + Math.floor(Math.random() * randRange * 2) - randRange : v
+    // );
+    // if (startingNotes.toString() === tunings.standard.toString()) {
+    //   let change = Math.floor(Math.random() * randRange * 2) - randRange;
+    //   while (change === 0) {
+    //     change = Math.floor(Math.random() * randRange * 2) - randRange;
+    //   }
+    //   //force wrong note
+    //   startingNotes[Math.floor(Math.random() * 6)] += change;
+    // }
     return {
       correctNotes: tunings.standard,
       startingNotes,
