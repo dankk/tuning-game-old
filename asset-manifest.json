@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/tuning-game/static/js/main.3ae88489.chunk.js",
+    "main.js.map": "/tuning-game/static/js/main.3ae88489.chunk.js.map",
+    "runtime-main.js": "/tuning-game/static/js/runtime-main.5b6eabc8.js",
+    "runtime-main.js.map": "/tuning-game/static/js/runtime-main.5b6eabc8.js.map",
+    "static/js/2.7d60496c.chunk.js": "/tuning-game/static/js/2.7d60496c.chunk.js",
+    "static/js/2.7d60496c.chunk.js.map": "/tuning-game/static/js/2.7d60496c.chunk.js.map",
+    "index.html": "/tuning-game/index.html",
+    "static/js/2.7d60496c.chunk.js.LICENSE.txt": "/tuning-game/static/js/2.7d60496c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5b6eabc8.js",
+    "static/js/2.7d60496c.chunk.js",
+    "static/js/main.3ae88489.chunk.js"
+  ]
+}
