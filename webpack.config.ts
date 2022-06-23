@@ -4,6 +4,8 @@ import { Configuration as WebpackConfiguration } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
+var webpack = require('webpack');
+
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
@@ -37,6 +39,9 @@ const config: Configuration = {
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
+    }),
+    new webpack.ProvidePlugin({
+      React: 'react',
     }),
   ],
   devServer: {
