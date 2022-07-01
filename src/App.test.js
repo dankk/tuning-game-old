@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-it('renders test', () => {
+it('renders difficulty selector', () => {
   render(<App />);
-  expect(screen.getByText('test')).toBeInTheDocument;
+  expect(screen.getByRole('slider')).toBeInTheDocument;
 });
