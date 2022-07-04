@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import DifficultySelector from './components/DifficultySelector';
+import Strings from './components/Strings';
 
 function App() {
   const [difficulty, setDifficulty] = useState(1);
@@ -20,7 +21,7 @@ function App() {
       handleStart={handleStart}
     />
   ) : (
-    <>started</>
+    <Strings />
   );
 }
 
