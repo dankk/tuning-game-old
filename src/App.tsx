@@ -21,7 +21,7 @@ function App() {
       handleStart={handleStart}
     />
   ) : (
-    <Strings />
+    <Strings difficulty={difficulty} />
   );
 }
 

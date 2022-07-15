@@ -1,10 +1,15 @@
 import String from './String';
 
-function Strings() {
+interface StringsInterface {
+  difficulty: number;
+}
+
+function Strings({ difficulty }: StringsInterface) {
   return (
     <div>
-      {[...Array(6)].map(() => (
-        <String />
+      <div>Difficulty: {difficulty}</div>
+      {[...Array(6)].map((v, i) => (
+        <String key={i} /> //change key
       ))}
     </div>
   );
