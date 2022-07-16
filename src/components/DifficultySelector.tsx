@@ -9,6 +9,7 @@ function DifficultySelector(props: DifficultySelectorInterface) {
 
   return (
     <div>
+      <div>Difficulty: {difficulty}</div>
       <input
         id="difficulty-selector"
         type="range"
