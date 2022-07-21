@@ -7,30 +7,43 @@ interface StringsInterface {
   difficulty: number;
 }
 
+interface StringData {
+  noteIndex: number;
+  isWrong?: boolean;
+}
+
 const baseNotes = tunings.standard;
 
 function Strings({ difficulty }: StringsInterface) {
-  const [noteIndices, setNoteIndices] = useState<number[] | null>();
+  const [stringData, setStringData] = useState<StringData[] | null>();
 
   useEffect(() => {
     const startingNotes = randomizedTuning(baseNotes, difficulty);
-    setNoteIndices(startingNotes);
+    setStringData(startingNotes);
   }, []);
 
   const changeNote = (stringIndex: number, direction: 'up' | 'down') => {
     const change = direction === 'up' ? 1 : -1;
-    setNoteIndices((s) =>
-      s?.map((noteIndex, i) => (stringIndex === i ? noteIndex + change : noteIndex)),
+    setStringData((state) =>
+      state?.map((string, i) =>
+        stringIndex === i ? { ...string, noteIndex: string.noteIndex + change } : { ...string },
+      ),
     );
   };
 
-  if (!noteIndices) return null;
+  if (!stringData) return null;
 
   return (
-    <div>
+    <div className="stringGroup">
       <div>Difficulty: {difficulty}</div>
-      {noteIndices.map((noteIndex, i) => (
-        <String key={v4()} stringIndex={i} noteIndex={noteIndex} changeNote={changeNote} />
+      {stringData.map((string, i) => (
+        <String
+          key={v4()}
+          stringIndex={i}
+          noteIndex={string.noteIndex}
+          isWrong={string.isWrong}
+          changeNote={changeNote}
+        />
       ))}
     </div>
   );

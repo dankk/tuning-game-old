@@ -23,7 +23,7 @@ export const randomizedTuning = (originalTuning: number[], numStringsToRandomize
   }
   let diff = 3;
   const newTuning = originalTuning.map((noteIndex: number, i: number) =>
-    randomIndices.has(i) ? noteIndex + diff : noteIndex,
+    randomIndices.has(i) ? { noteIndex: noteIndex + diff, isWrong: true } : { noteIndex },
   );
   return newTuning;
 };

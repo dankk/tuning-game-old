@@ -8,11 +8,11 @@ describe('app', () => {
   });
 
   it('shows strings when started', async () => {
-    render(<App />);
+    const { container } = render(<App />);
     const button = screen.getByText('Start');
     act(() => {
       button.click();
     });
-    expect(await screen.findByText('B')).toBeInTheDocument;
+    expect(container.querySelector('stringGroup')).toBeInTheDocument;
   });
 });
