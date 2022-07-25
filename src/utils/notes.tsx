@@ -1,11 +1,6 @@
 export const toneList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const octList = [2, 3, 4, 5];
 
-interface NoteInterface {
-  note: string;
-  oct: number;
-}
-
 export const noteList = octList.reduce((notes: any, oct) => {
   return [...notes, ...toneList.map((n) => ({ note: n, octave: oct }))];
 }, []) as NoteInterface[];
@@ -26,4 +21,10 @@ export const randomizedTuning = (originalTuning: number[], numStringsToRandomize
     randomIndices.has(i) ? { noteIndex: noteIndex + diff, isWrong: true } : { noteIndex },
   );
   return newTuning;
+};
+
+export const canChangeNote = (direction: Direction, noteIndex: number) => {
+  if (direction === 'up' && noteIndex >= noteList.length - 1) return false;
+  if (direction === 'down' && noteIndex <= 0) return false;
+  return true;
 };

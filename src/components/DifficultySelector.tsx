@@ -1,9 +1,3 @@
-interface DifficultySelectorInterface {
-  difficulty: number;
-  handleChangeDifficulty: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleStart: () => void;
-}
-
 function DifficultySelector(props: DifficultySelectorInterface) {
   const { difficulty, handleChangeDifficulty, handleStart } = props;
 

@@ -1,18 +1,15 @@
 import String from './String';
 import { v4 } from 'uuid';
-import { randomizedTuning, tunings } from '../utils/notes';
+import { noteList, randomizedTuning, tunings } from '../utils/notes';
 import { useEffect, useState } from 'react';
 
-interface StringsInterface {
-  difficulty: number;
-}
-
-interface StringData {
-  noteIndex: number;
-  isWrong?: boolean;
-}
-
 const baseNotes = tunings.standard;
+
+const canChangeNote = (direction: Direction, noteIndex: number) => {
+  if (direction === 'up' && noteIndex >= noteList.length - 1) return false;
+  if (direction === 'down' && noteIndex <= 0) return false;
+  return true;
+};
 
 function Strings({ difficulty }: StringsInterface) {
   const [stringData, setStringData] = useState<StringData[] | null>();
@@ -22,8 +19,10 @@ function Strings({ difficulty }: StringsInterface) {
     setStringData(startingNotes);
   }, []);
 
-  const changeNote = (stringIndex: number, direction: 'up' | 'down') => {
+  const changeNote = (stringIndex: number, direction: Direction) => {
+    if (!stringData) return;
     const change = direction === 'up' ? 1 : -1;
+    if (!canChangeNote(direction, stringData[stringIndex].noteIndex)) return;
     setStringData((state) =>
       state?.map((string, i) =>
         stringIndex === i ? { ...string, noteIndex: string.noteIndex + change } : { ...string },
