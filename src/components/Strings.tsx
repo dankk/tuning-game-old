@@ -2,6 +2,7 @@ import String from './String';
 import { v4 } from 'uuid';
 import { noteList, randomizedTuning, tunings } from '../utils/notes';
 import { useEffect, useState } from 'react';
+import { playNote } from '../utils/sounds';
 
 const baseNotes = tunings.standard;
 
@@ -28,6 +29,7 @@ function Strings({ difficulty }: StringsInterface) {
         stringIndex === i ? { ...string, noteIndex: string.noteIndex + change } : { ...string },
       ),
     );
+    playNote(stringData[stringIndex].noteIndex + change);
   };
 
   if (!stringData) return null;

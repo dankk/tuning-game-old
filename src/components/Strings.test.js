@@ -1,9 +1,12 @@
+jest.mock('../utils/sounds.js');
+
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Strings from './Strings';
 
 describe('strings', () => {
   const user = userEvent.setup();
+
   it('renders 6 strings with starting notes', () => {
     const startingNotes = ['E', 'A', 'D', 'G', 'B', 'E'];
     const { container } = render(<Strings difficulty={0} />);

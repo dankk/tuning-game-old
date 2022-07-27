@@ -1,7 +1,9 @@
 import { noteList } from '../utils/notes';
+import { playNote } from '../utils/sounds';
 
 function String({ stringIndex, noteIndex, isWrong, changeNote }: StringInterface) {
   const note = noteList[noteIndex];
+  const playCurrentNote = () => playNote(noteIndex);
   return (
     <div style={{ display: 'flex' }}>
       {isWrong ? null : (
@@ -9,7 +11,9 @@ function String({ stringIndex, noteIndex, isWrong, changeNote }: StringInterface
           {'<--'}
         </div>
       )}
-      <div className="stringNote">{isWrong ? '?' : note.note}</div>
+      <div className="stringNote" onClick={playCurrentNote}>
+        {isWrong ? '?' : note.note}
+      </div>
       {isWrong ? null : (
         <div onClick={() => changeNote(stringIndex, 'up')} className="incrementNote">
           {'-->'}

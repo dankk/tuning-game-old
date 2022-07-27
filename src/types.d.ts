@@ -24,5 +24,5 @@ type Direction = 'up' | 'down';
 
 interface NoteInterface {
   note: string;
-  oct: number;
+  octave: number;
 }
