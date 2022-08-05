@@ -6,19 +6,19 @@ function String({ stringIndex, noteIndex, isWrong, changeNote }: StringInterface
   const playCurrentNote = () => playNote(noteIndex);
   return (
     <div style={{ display: 'flex' }}>
-      {isWrong ? null : (
+      {isWrong ? (
         <div onClick={() => changeNote(stringIndex, 'down')} className="decrementNote">
           {'<--'}
         </div>
-      )}
+      ) : null}
       <div className="stringNote" onClick={playCurrentNote}>
         {isWrong ? '?' : note.note}
       </div>
-      {isWrong ? null : (
+      {isWrong ? (
         <div onClick={() => changeNote(stringIndex, 'up')} className="incrementNote">
           {'-->'}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
